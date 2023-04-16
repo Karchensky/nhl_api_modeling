@@ -2,7 +2,7 @@ import datetime
 from functions.scraper_schedule import scraper_schedule
 from functions.db_append import db_append
 
-# We are going to scrape all the games from 2018-2019 season onward. 
+# Scrape all the games starting in 2018 --> the current year
 start_season = 2018
 end_season = datetime.datetime.now().year
 
