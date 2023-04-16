@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 from functions.scraper_endpoint import scraper_endpoint
 
-def scraper_player_game_logs(game_id):
+def scraper_player_game_logs_boxscore(game_id):
     # Establish destination
     endpoint = scraper_endpoint(f'game/{game_id}/boxscore')
 

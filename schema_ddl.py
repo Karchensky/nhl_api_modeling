@@ -8,7 +8,7 @@ DROP TABLE IF EXISTS PLAYER_GAME_LOGS
 
 sql_statement = db_write(''' 
 
-CREATE TABLE IF NOT EXISTS PLAYER_GAME_LOGS (
+CREATE TABLE IF NOT EXISTS PLAYER_GAME_LOGS_BOXSCORE (
     GAME_ID                     INTEGER         PRIMARY_KEY,
     PLAYER_ID                   INTEGER         PRIMARY_KEY,
     TEAM_ID                     INTEGER,

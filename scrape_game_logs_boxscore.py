@@ -1,5 +1,5 @@
 import datetime
-from functions.scraper_player_game_logs import scraper_player_game_logs
+from functions.scraper_player_game_logs_boxscore import scraper_player_game_logs_boxscore
 from functions.db_append import db_append
 
 # We are going to scrape all the games from 2018-2019 season onward. 
@@ -14,4 +14,4 @@ for season in range(start_season, end_season):
         
         for game_num in range(1, (num_teams*82/2) + 1):
             game_id = str(season) + '02' + str(game_num).zfill(4)
-            db_append('PLAYER_GAME_LOGS', scraper_player_game_logs(game_id))
+            db_append('PLAYER_GAME_LOGS_BOXSCORE', scraper_player_game_logs_boxscore(game_id))
