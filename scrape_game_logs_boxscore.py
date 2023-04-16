@@ -1,17 +1,7 @@
-import datetime
 from functions.scraper_player_game_logs_boxscore import scraper_player_game_logs_boxscore
+from functions.db_list_fresh_game_ids import db_list_fresh_game_ids
 from functions.db_append import db_append
 
-# We are going to scrape all the games from 2018-2019 season onward. 
-start_season = 2018
-end_season = datetime.datetime.now().year
-
-for season in range(start_season, end_season):
-    if season in [2018, 2019, 2020]:
-        num_teams = 31
-    elif season >= 2021:
-        num_teams = 32
-        
-        for game_num in range(1, (num_teams*82/2) + 1):
-            game_id = str(season) + '02' + str(game_num).zfill(4)
-            db_append('PLAYER_GAME_LOGS_BOXSCORE', scraper_player_game_logs_boxscore(game_id))
+# Scrape all the game logs that we don't already have recorded in our table
+for game_id in db_list_fresh_game_ids("PLAYER_GAME_LOGS_BOXSCORE"):
+    db_append('PLAYER_GAME_LOGS_BOXSCORE', scraper_player_game_logs_boxscore(game_id))

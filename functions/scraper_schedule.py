@@ -4,7 +4,9 @@ import pandas as pd
 from datetime import datetime
 from functions.scraper_endpoint import scraper_endpoint
 
+# This function scrapes the schedule
 def scraper_schedule(season):
+
     # Establish destination
     endpoint = scraper_endpoint(f'schedule')
 
@@ -38,11 +40,11 @@ def scraper_schedule(season):
             away_team_losses = game['teams']['away']['leagueRecord']['losses']
             away_team_ot_losses = game['teams']['away']['leagueRecord'].get('ot', 0)
 
-            # Append each player to player stats
+            # Append each game record to our season
             schedule.append([   game_id, home_team_id, away_team_id, season, game_date, game_state, home_team_name, away_team_name, home_score, away_score,
                                 home_team_wins, home_team_losses, home_team_ot_losses, away_team_wins, away_team_losses, away_team_ot_losses ])
 
-    # Convert player stats to a Pandas DataFrame and print as table
+    # Convert season to a Pandas DataFrame and print as table
     headers = [ "GAME_ID", "HOME_TEAM_ID", "AWAY_TEAM_ID", "SEASON", "GAME_DATE", "GAME_STATE", "HOME_TEAM_NAME", "AWAY_TEAM_NAME", "HOME_SCORE", "AWAY_SCORE", 
                 "HOME_TEAM_WINS","HOME_TEAM_LOSSES","HOME_TEAM_OT_LOSSES","AWAY_TEAM_WINS","AWAY_TEAM_LOSSES","AWAY_TEAM_OT_LOSSES"]
     df = pd.DataFrame(schedule, columns=headers)

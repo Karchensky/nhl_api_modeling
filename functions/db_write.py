@@ -1,10 +1,11 @@
 import sqlite3
 from functions.db_set_path import db_set_path
 
-def db_write(sql_statement, db_path = db_set_path()):
+# This function executes a SQL statement against our database.
+def db_write(sql_statement):
     
     # Connect to the database
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(db_set_path())
 
     # Create a cursor object
     cur = conn.cursor()
