@@ -9,7 +9,7 @@ def db_list_fresh_game_ids(table_name):
     conn = sqlite3.connect(db_set_path())
 
     # Query for all game IDs that are in FINAL state
-    game_ids_query = "SELECT GAME_ID FROM TEAM_SCHEDULE WHERE GAME_STATE = 'Final'"
+    game_ids_query = "SELECT GAME_ID FROM STG_SCHEDULE WHERE GAME_STATE = 'Final'"
     game_ids_df = pd.read_sql(game_ids_query, conn)
 
     # Query for all game IDs that already exist in the target table
