@@ -16,15 +16,6 @@ def scraper_game_events(game_id):
     # Load the JSON data
     data = json.loads(response.text)
 
-    # Extract event data
-    events_list = []
-    events = data.get("liveData", {}).get("plays", {}).get("allPlays", [])
-    for event in events:
-        if event['result']['eventTypeId'] in ['SHOT', 'BLOCKED_SHOT', 'MISSED_SHOT', 'GOAL', 'PENALTY']:
-
-            # Game info
-            game_id = int(game_id)
-
 # Extract event data
     events_list = []
     events = data.get("liveData", {}).get("plays", {}).get("allPlays", [])
