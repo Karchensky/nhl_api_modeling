@@ -2,7 +2,7 @@ import requests
 import json
 import pandas as pd
 from functions.scraper_endpoint import scraper_endpoint
-
+from functions.time_text_to_seconds import time_text_to_seconds
 
 # This function scrapes the event data for a specific game_id
 def scraper_game_events(game_id):
@@ -31,7 +31,7 @@ def scraper_game_events(game_id):
             event_description = event.get("result", {}).get("description")
             period = event.get("about", {}).get("period")
             period_time = event.get("about", {}).get("periodTime")
-            period_remaining_time = event.get("about", {}).get("periodTimeRemaining")
+            period_time_in_seconds = time_text_to_seconds(period_time)
             team_id = event.get("team", {}).get("id")
             x_coord = event.get("coordinates", {}).get("x")
             y_coord = event.get("coordinates", {}).get("y")
@@ -84,10 +84,10 @@ def scraper_game_events(game_id):
                 goal_empty_net_ind = None
 
             # Append the play data to the play_data list
-            events_list.append([game_id, event_id, event_type, event_description, period, period_time, period_remaining_time, team_id, x_coord, y_coord, player_id,  shooter_id, scorer_id, primary_assist_id, secondary_assist_id, goalie_id, goal_type, goal_strength, goal_empty_net_ind])
+            events_list.append([game_id, event_id, event_type, event_description, period, period_time, period_time_in_seconds, team_id, x_coord, y_coord, player_id,  shooter_id, scorer_id, primary_assist_id, secondary_assist_id, goalie_id, goal_type, goal_strength, goal_empty_net_ind])
 
     # Create a pandas dataframe from the play_data list
-    headers = [ "GAME_ID","EVENT_ID", "EVENT_TYPE", "EVENT_DESCRIPTION", "PERIOD", "PERIOD_TIME", "PERIOD_REMAINING_TIME", "TEAM_ID", "X_COORD", "Y_COORD",
+    headers = [ "GAME_ID","EVENT_ID", "EVENT_TYPE", "EVENT_DESCRIPTION", "PERIOD", "PERIOD_TIME", "PERIOD_TIME_IN_SECONDS", "TEAM_ID", "X_COORD", "Y_COORD",
                 "PLAYER_ID", "SHOOTER_ID", "SCORER_ID", "PRIMARY_ASSIST_ID", "SECONDARY_ASSIST_ID", "GOALIE_ID", "GOAL_TYPE", "GOAL_STRENGTH", "GOAL_EMPTY_NET_IND"]
     df = pd.DataFrame(events_list, columns=headers)
 

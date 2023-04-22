@@ -2,7 +2,7 @@ import requests
 import pandas as pd
 from functions.scraper_endpoint import scraper_endpoint
 
-# This function scrapes the box scores for player data when given a specific game_id
+# This function scrapes teams to get a distinct list of teams and team id's
 def scraper_teams():
     
     # Establish destination

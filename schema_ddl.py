@@ -23,39 +23,48 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_SCHEDULE (
 )
 ''')
 
-# # This table will house the raw boxscore data
-sql_statement = db_write('''DROP TABLE IF EXISTS STG_BOXSCORE''')
-sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_BOXSCORE (
-    GAME_ID                     INTEGER         PRIMARY_KEY,
-    PLAYER_ID                   INTEGER         PRIMARY_KEY,
-    TEAM_ID                     INTEGER,
-    PLAYER_NAME                 TEXT,
-    BIRTHDATE                   DATE,
-    POSITION                    TEXT,
-    TIME_ON_ICE                 TEXT,
-    ASSISTS                     INTEGER,         
-    GOALS                       INTEGER,
-    SHOTS                       INTEGER,
-    HITS                        INTEGER,
-    POWER_PLAY_GOALS            INTEGER,
-    POWER_PLAY_ASSISTS          INTEGER,
-    PENALTY_MINUTES             INTEGER,
-    SHORT_HANDED_GOALS          INTEGER,
-    SHORT_HANDED_ASSISTS        INTEGER,
-    BLOCKED                     INTEGER,
-    PLUS_MINUS                  INTEGER,
-    EVEN_TIME_ON_ICE            TEXT,
-    POWER_PLAY_TIME_ON_ICE      TEXT,
-    SHORT_HANDED_TIME_ON_ICE    TEXT
-)
-''')
-
 # # This table will house the raw teams & their corresponding ID's
 sql_statement = db_write('''DROP TABLE IF EXISTS STG_TEAMS''')
 sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_TEAMS (
     TEAM_ID                 INTEGER         PRIMARY_KEY,
     TEAM_NAME               TEXT,
     TEAM_ABBREVIATION       TEXT
+)
+''')
+
+# # This table will house the raw teams & their corresponding ID's
+sql_statement = db_write('''DROP TABLE IF EXISTS STG_PLAYERS''')
+sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_PLAYERS (
+    PLAYER_ID               INTEGER         PRIMARY_KEY,
+    PLAYER_NAME             TEXT
+)
+''')
+
+# # This table will house the raw boxscore data
+sql_statement = db_write('''DROP TABLE IF EXISTS STG_BOXSCORE''')
+sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_BOXSCORE (
+    GAME_ID                             INTEGER         PRIMARY_KEY,
+    PLAYER_ID                           INTEGER         PRIMARY_KEY,
+    TEAM_ID                             INTEGER,
+    POSITION                            TEXT,
+    TIME_ON_ICE                         TEXT,
+    ASSISTS                             INTEGER,         
+    GOALS                               INTEGER,
+    SHOTS                               INTEGER,
+    HITS                                INTEGER,
+    POWER_PLAY_GOALS                    INTEGER,
+    POWER_PLAY_ASSISTS                  INTEGER,
+    PENALTY_MINUTES                     INTEGER,
+    SHORT_HANDED_GOALS                  INTEGER,
+    SHORT_HANDED_ASSISTS                INTEGER,
+    BLOCKED                             INTEGER,
+    PLUS_MINUS                          INTEGER,
+    EVEN_TIME_ON_ICE                    TEXT,
+    POWER_PLAY_TIME_ON_ICE              TEXT,
+    SHORT_HANDED_TIME_ON_ICE            TEXT,
+    EVEN_TIME_ON_ICE_IN_SECONDS         INTEGER,
+    POWER_PLAY_TIME_ON_ICE_IN_SECONDS   INTEGER,
+    SHORT_HANDED_TIME_ON_ICE_IN_SECONDS INTEGER
 )
 ''')
 
@@ -68,7 +77,7 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_GAME_EVENTS (
     EVENT_DESCRIPTION           TEXT,
     PERIOD                      INTEGER,
     PERIOD_TIME                 TEXT,
-    PERIOD_REMAINING_TIME       TEXT,
+    PERIOD_TIME_IN_SECONDS      INTEGER,
     TEAM_ID                     INTEGER,
     X_COORD                     INTEGER,
     Y_COORD                     INTEGER,

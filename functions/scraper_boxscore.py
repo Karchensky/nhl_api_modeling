@@ -1,8 +1,8 @@
 import requests
 import json
 import pandas as pd
-from datetime import datetime
 from functions.scraper_endpoint import scraper_endpoint
+from functions.time_text_to_seconds import time_text_to_seconds
 
 # This function scrapes the box scores for player data when given a specific game_id
 def scraper_boxscore(game_id):
@@ -30,8 +30,6 @@ def scraper_boxscore(game_id):
 
                 # Skater bio
                 player_id = int(player_data["person"]["id"])
-                player_name = player_data["person"]["fullName"]
-                birthdate = datetime.strptime(player_data["person"].get("birthDate", "9999-12-31"), '%Y-%m-%d').date()
                 if "primaryPosition" in player_data["person"]:
                     position = player_data["person"]["primaryPosition"]["abbreviation"]
                 else:
@@ -55,6 +53,9 @@ def scraper_boxscore(game_id):
                     even_time_on_ice = stats.get("evenTimeOnIce")
                     power_play_time_on_ice = stats.get("powerPlayTimeOnIce")
                     short_handed_time_on_ice = stats.get("shortHandedTimeOnIce")
+                    even_time_on_ice_in_seconds =  time_text_to_seconds(even_time_on_ice)
+                    power_play_time_on_ice_in_seconds = time_text_to_seconds(power_play_time_on_ice)
+                    short_handed_time_on_ice_in_seconds = time_text_to_seconds(short_handed_time_on_ice)
                 else:
                     time_on_ice = 0
                     assists = 0
@@ -71,16 +72,21 @@ def scraper_boxscore(game_id):
                     even_time_on_ice = 0
                     power_play_time_on_ice = 0
                     short_handed_time_on_ice = 0
+                    even_time_on_ice_in_seconds = 0
+                    power_play_time_on_ice_in_seconds = 0
+                    short_handed_time_on_ice_in_seconds = 0
 
                 # Append each player to player stats
-                player_stats.append([   game_id, player_id, team_id, player_name, birthdate, position, time_on_ice, assists, goals, shots, hits, 
+                player_stats.append([   game_id, player_id, team_id, position, time_on_ice, assists, goals, shots, hits, 
                                         power_play_goals, power_play_assists, penalty_minutes, short_handed_goals, short_handed_assists, 
-                                        blocked, plus_minus, even_time_on_ice, power_play_time_on_ice, short_handed_time_on_ice ])
+                                        blocked, plus_minus, even_time_on_ice, power_play_time_on_ice, short_handed_time_on_ice, 
+                                        even_time_on_ice_in_seconds, power_play_time_on_ice_in_seconds, short_handed_time_on_ice_in_seconds])
 
     # Convert player stats to a Pandas DataFrame and print as table
-    headers = [ "GAME_ID", "PLAYER_ID", "TEAM_ID", "PLAYER_NAME", "BIRTHDATE", "POSITION", "TIME_ON_ICE", "ASSISTS", "GOALS", "SHOTS", "HITS",
+    headers = [ "GAME_ID", "PLAYER_ID", "TEAM_ID", "POSITION", "TIME_ON_ICE", "ASSISTS", "GOALS", "SHOTS", "HITS",
                 "POWER_PLAY_GOALS", "POWER_PLAY_ASSISTS", "PENALTY_MINUTES", "SHORT_HANDED_GOALS", "SHORT_HANDED_ASSISTS",
-                "BLOCKED", "PLUS_MINUS", "EVEN_TIME_ON_ICE", "POWER_PLAY_TIME_ON_ICE", "SHORT_HANDED_TIME_ON_ICE"]
+                "BLOCKED", "PLUS_MINUS", "EVEN_TIME_ON_ICE", "POWER_PLAY_TIME_ON_ICE", "SHORT_HANDED_TIME_ON_ICE",
+                "EVEN_TIME_ON_ICE_IN_SECONDS", "POWER_PLAY_TIME_ON_ICE_IN_SECONDS", "SHORT_HANDED_TIME_ON_ICE_IN_SECONDS"]
     df = pd.DataFrame(player_stats, columns=headers)
     df = df[(df["TIME_ON_ICE"] != "0:00") & (df["TIME_ON_ICE"] != 0)]
 
