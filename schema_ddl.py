@@ -110,3 +110,37 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_SHIFTS (
     DURATION_IN_SECONDS     INTEGER
 )
 ''')
+
+# This table will house the raw power play TOI data
+sql_statement = db_write('''DROP TABLE IF EXISTS STG_POWER_PLAY_TOI''')
+sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_POWER_PLAY_TOI (
+    GAME_ID                 INTEGER         PRIMARY_KEY,
+    TEAM_ID                 INTEGER         PRIMARY_KEY,
+    SEASON                  INTEGER,
+    PP_TOI_5_ON_4           INTEGER,
+    PP_TOI_5_ON_3           INTEGER,
+    PP_TOI_4_ON_3           INTEGER,
+    PP_TOI_TOTAL            INTEGER,
+    PPOPPORTUNITIES         INTEGER,
+    GOALS_FOR_5V4           INTEGER,
+    GOALS_FOR_5V3           INTEGER,
+    GOALS_FOR_4V3           INTEGER
+)
+''')
+
+# This table will house the raw power play TOI data
+sql_statement = db_write('''DROP TABLE IF EXISTS STG_PENALTY_KILL_TOI''')
+sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_PENALTY_KILL_TOI (
+    GAME_ID                 INTEGER         PRIMARY_KEY,
+    TEAM_ID                 INTEGER         PRIMARY_KEY,
+    SEASON                  INTEGER,
+    PK_TOI_4_ON_5           INTEGER,
+    PK_TOI_3_ON_5           INTEGER,
+    PK_TOI_3_ON_4           INTEGER,
+    PK_TOI_TOTAL            INTEGER,
+    TIMESSHORTHANDED        INTEGER,
+    GOALS_AGAINST_4_ON_5    INTEGER,
+    GOALS_AGAINST_3_ON_5    INTEGER,
+    GOALS_AGAINST_3_ON_4    INTEGER
+)
+''')
