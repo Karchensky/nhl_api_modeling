@@ -23,7 +23,7 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_SCHEDULE (
 )
 ''')
 
-# # This table will house the raw teams & their corresponding ID's
+# This table will house the raw team list & their corresponding ID's
 sql_statement = db_write('''DROP TABLE IF EXISTS STG_TEAMS''')
 sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_TEAMS (
     TEAM_ID                 INTEGER         PRIMARY_KEY,
@@ -32,7 +32,7 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_TEAMS (
 )
 ''')
 
-# # This table will house the raw teams & their corresponding ID's
+# This table will house the raw player list
 sql_statement = db_write('''DROP TABLE IF EXISTS STG_PLAYERS''')
 sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_PLAYERS (
     PLAYER_ID               INTEGER         PRIMARY_KEY,
@@ -40,7 +40,7 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_PLAYERS (
 )
 ''')
 
-# # This table will house the raw boxscore data
+# This table will house the raw boxscore data
 sql_statement = db_write('''DROP TABLE IF EXISTS STG_BOXSCORE''')
 sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_BOXSCORE (
     GAME_ID                             INTEGER         PRIMARY_KEY,
@@ -68,7 +68,7 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_BOXSCORE (
 )
 ''')
 
-# This table will house the raw schedule
+# This table will house the raw game event data
 sql_statement = db_write('''DROP TABLE IF EXISTS STG_GAME_EVENTS''')
 sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_GAME_EVENTS (
     GAME_ID                     INTEGER         PRIMARY_KEY,
@@ -90,5 +90,23 @@ sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_GAME_EVENTS (
     GOAL_TYPE                   TEXT,
     GOAL_STRENGTH               TEXT,
     GOAL_EMPTY_NET_IND          BOOLEAN
+)
+''')
+
+# This table will house the raw shift data
+sql_statement = db_write('''DROP TABLE IF EXISTS STG_SHIFTS''')
+sql_statement = db_write('''CREATE TABLE IF NOT EXISTS STG_SHIFTS (
+    SHIFT_ID                INTEGER         PRIMARY_KEY,
+    GAME_ID                 INTEGER,
+    TEAM_ID                 INTEGER,
+    PLAYER_ID               INTEGER,
+    SHIFT_NUMBER            INTEGER,
+    PERIOD                  INTEGER,
+    START_TIME              TEXT,
+    END_TIME                TEXT,
+    DURATION                TEXT,
+    START_TIME_IN_SECONDS   INTEGER,
+    END_TIME_IN_SECONDS     INTEGER,
+    DURATION_IN_SECONDS     INTEGER
 )
 ''')
